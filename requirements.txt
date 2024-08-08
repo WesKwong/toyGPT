@@ -1,7 +1,4 @@
 torch
-numpy
 tqdm
+rich
 loguru
-tiktoken
-datasets
-transformers
