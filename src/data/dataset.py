@@ -5,7 +5,7 @@ import numpy as np
 import numpy.typing as npt
 from numba import njit, prange
 from loguru import logger
-from torch.utils.data import Dataset
+from torch.utils.data import Dataset, DataLoader
 
 DataType: TypeAlias = npt.NDArray[np.int32]
 
@@ -76,3 +76,23 @@ class ShakespeareDataset(Dataset):
             The datas and labels -> `Tuple[DataType, DataType]`
         """
         return self.datas[idx], self.labels[idx]
+
+
+def get_dataloader(dataset: ShakespeareDataset, batch_size: int, train: bool,
+                   num_workers: int = 4) -> DataLoader:
+    """
+    Get a dataloader for the dataset.
+
+    Args:
+        dataset (ShakespeareDataset): The dataset.
+        batch_size (int): The batch size.
+        train (bool): Whether the dataloader is for training.
+        num_workers (int): The number of workers.
+
+    Returns:
+        DataLoader: The dataloader.
+    """
+    return DataLoader(dataset,
+                      batch_size=batch_size,
+                      shuffle=train,
+                      num_workers=num_workers)
