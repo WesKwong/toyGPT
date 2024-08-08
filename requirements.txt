@@ -1,4 +1,6 @@
 torch
+numpy
+numba
 tqdm
 rich
 loguru
