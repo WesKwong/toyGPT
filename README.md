@@ -1,2 +1,2 @@
-# Learn-to-Code-Transformer
-A repo for me to learn to code Transformer.
+# toyGPT
+A character-level toy GPT based on the GPT-2 architecture.
