@@ -12,7 +12,7 @@ class Config:
     expansion_factor: int = 4
     dropout: float = 0.0
     # Training parameters
-    epochs: int = 1
+    epochs: int = 20
     chunk_size: int = 64
     batch_size: int = 1536
     lr: float = 1e-3
