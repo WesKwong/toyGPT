@@ -7,7 +7,7 @@ from numba import njit, prange
 from loguru import logger
 from torch.utils.data import Dataset, DataLoader
 
-DataType: TypeAlias = npt.NDArray[np.int32]
+DataType: TypeAlias = npt.NDArray[np.longlong]
 
 
 @njit(parallel=True)
@@ -24,8 +24,8 @@ def gen_dataset(encoded_data: DataType, len: int,
     Returns:
         The datas and labels are both of shape `(len, chunk_size)` -> `Tuple[DataType, DataType]`
     """
-    datas = np.empty((len, chunk_size), dtype=np.int32)
-    labels = np.empty((len, chunk_size), dtype=np.int32)
+    datas = np.empty((len, chunk_size), dtype=np.longlong)
+    labels = np.empty((len, chunk_size), dtype=np.longlong)
     for i in prange(len):
         datas[i] = encoded_data[i:i + chunk_size]
         labels[i] = encoded_data[i + 1:i + chunk_size + 1]
@@ -46,8 +46,8 @@ class ShakespeareDataset(Dataset):
             tokenizer (Any): The tokenizer.
         """
         self.len: int = 0
-        self.datas: np.NDArray[np.int32]
-        self.labels: np.NDArray[np.int32]
+        self.datas: np.NDArray[np.longlong]
+        self.labels: np.NDArray[np.longlong]
 
         encoded_data = tokenizer.encode(raw_data)
         self.len: int = len(encoded_data) - chunk_size
