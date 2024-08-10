@@ -31,6 +31,9 @@ def inference(args):
     model = toyGPT(config.n_block, config.seq_len, config.embed_size,
                     config.hidden_size, config.n_head, config.expansion_factor,
                     config.dropout, len(tokenizer))
+    if sys.version_info < (3, 12):
+        model = torch.compile(model, mode='reduce-overhead')
+        logger.success("Model compiled with reduce-overhead mode")
     model_path = os.path.join(result_dir, "model.pth")
     model.load_state_dict(torch.load(model_path))
     model = model.to(device)

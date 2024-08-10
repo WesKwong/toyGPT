@@ -14,7 +14,7 @@ class Config:
     # Training parameters
     epochs: int = 20
     chunk_size: int = 64
-    batch_size: int = 1536
+    batch_size: int = 1024
     lr: float = 1e-3
 
 config = Config()

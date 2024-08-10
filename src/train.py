@@ -84,6 +84,8 @@ def train(model, train_loader, valid_loader, optimizer, epochs, device, result_d
 def main():
     # Set up
     result_dir = make_result_dir()
+    logger.info(f"Result directory: {result_dir}")
+    logger.add(os.path.join(result_dir, "train.log"))
     torch.save(config, os.path.join(result_dir, "config.pt"))
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     logger.info(f"Using device: {device}")
@@ -102,7 +104,8 @@ def main():
                     config.hidden_size, config.n_head, config.expansion_factor,
                     config.dropout, len(tokenizer))
     if sys.version_info < (3, 12):
-        model = torch.compile(model, mode='reduce_overhead')
+        model = torch.compile(model, mode='reduce-overhead')
+        logger.success("Model compiled with reduce-overhead mode")
     model = model.to(device)
     optimizer = torch.optim.AdamW(model.parameters(), lr=config.lr)
     train(model, train_loader, valid_loader, optimizer, config.epochs, device, result_dir)
